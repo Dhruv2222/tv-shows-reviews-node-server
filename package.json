@@ -1,0 +1,26 @@
+{
+  "type": "module",
+  "name": "tv-shows-reviews-node-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node App.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhruv2222/tv-shows-reviews-node-server.git"
+  },
+  "author": "Dhruv Doshi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dhruv2222/tv-shows-reviews-node-server/issues"
+  },
+  "homepage": "https://github.com/Dhruv2222/tv-shows-reviews-node-server#readme",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  }
+}
