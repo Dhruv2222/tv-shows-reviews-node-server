@@ -1,21 +1,41 @@
-import db from "../Database/index.js"
-
+import db from "../Database/index.js";
+import * as dao from "./dao.js";
 export default function UserRoutes(app) {
-    app.get("/api/users", (req, res) => {
-        res.send(db.users);
+
+    app.get("/api/users", async (req, res) => {
+        // res.send(db.users);
+        const users = await dao.findAllUsers();
+        res.json(users);
     });
 
-    app.post("/api/users/register", (req, res) => {
-        const newUser = {
-          ...req.body,
-          _id: new Date().getTime().toString(),
-        };
-        db.users.push(newUser);
-        req.session.currentUser = newUser;
+    app.get("/api/users/:userId", async (req, res) => {
+      // res.send(db.users);
+      const userId = req.params.userId
+      const user = await dao.findUserById(userId);
+      res.send(user);
+  });
+
+    app.post("/api/users/register", async (req, res) => {
+      const { username, password } = req.body;
+      const existUser = await dao.findUserByCredentials(username, password);
+      if(existUser){
+        res.status(400).send("Username Already exists");
+        return
+      }
+      // res.json(currentUser);
+  
+        const newUser = 
+        dao.createUser({username, password});
+        // {
+        //   ...req.body,
+        //   _id: new Date().getTime().toString(),
+        // };
+        // db.users.push(newUser);
+        req.session["currentUser"] = newUser;
         res.send(newUser);
       });
 
-      app.get("/api/users/profile", (req, res) => {
+      app.get("/api/users/profile", async (req, res) => {
         if (!req.session.currentUser) {
             res.status(401).send("Not logged in");
             return;
@@ -28,10 +48,12 @@ export default function UserRoutes(app) {
         res.send("Logged out");
       });
 
-      app.post("/api/users/login", (req, res) => {
-        const user = db.users.find(
-            (u) => u.username === req.body.username && u.password === req.body.password
-        ); 
+      app.post("/api/users/login", async(req, res) => {
+        const { username, password } = req.body;
+        const user = await dao.findUserByCredentials(username, password);
+        // const user = db.users.find(
+        //     (u) => u.username === req.body.username && u.password === req.body.password
+        // ); 
         if (user) {
             req.session.currentUser = user;
             res.send(user);

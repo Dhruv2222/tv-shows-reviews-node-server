@@ -4,6 +4,42 @@ import Hello from "./Test.js";
 import session from 'express-session'
 import AuthRoutes from "./Auth/routes.js";
 import UserRoutes from "./Users/routes.js";
+import mongoose from "mongoose";
+
+mongoose.connect("mongodb+srv://Cluster89442:aXF2Zm56TlRE@cluster89442.0fq4prg.mongodb.net/sample-d");
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
+
+mongoose.connection.on('error', (err) => {
+    console.error('MongoDB connection error:', err);
+});
+
+mongoose.connection.on('disconnected', () => {
+    console.log('Disconnected from MongoDB');
+});
+
+const assignmentSchema = new mongoose.Schema({
+    _id: String,
+    title: String,
+    course: String
+});
+
+// Create a model
+const Assignment = mongoose.model('Assignment', assignmentSchema, 's');
+
+// Define an async function to run the query
+async function retrieveAssignments() {
+    try {
+        // Run the query
+        const assignments = await Assignment.find({ course: 'RS103' }).exec();
+        console.log('Assignments for RS103:', assignments);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+retrieveAssignments();
 
 const app = express();
 app.use(cors({
