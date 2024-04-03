@@ -4,6 +4,7 @@ import Hello from "./Test.js";
 import session from 'express-session'
 import AuthRoutes from "./Auth/routes.js";
 import UserRoutes from "./Users/routes.js";
+import ReviewRoutes from "./Profile/routes.js";
 import mongoose from "mongoose";
 
 mongoose.connect("mongodb+srv://Cluster89442:aXF2Zm56TlRE@cluster89442.0fq4prg.mongodb.net/sample-d");
@@ -45,7 +46,7 @@ const app = express();
 app.use(cors({
     origin: 'http://localhost:3000', // Allow requests from this origin
     credentials: true // Allow cookies and HTTP authentication to be sent
-  }));
+}));
 app.use(express.json());
 app.use(
     session({
@@ -55,5 +56,6 @@ app.use(
 )
 AuthRoutes(app);
 UserRoutes(app);
+ReviewRoutes(app);
 Hello(app);
 app.listen(process.env.PORT || 4000);
