@@ -8,6 +8,21 @@ export default function UserRoutes(app) {
     res.json(users);
   });
 
+  app.get("/api/users/profile", async (req, res) => {
+    console.log("123")
+    if (!req.session.currentUser) {
+      res.status(401).send("Not logged in");
+      return;
+    }
+    console.log("123", req.session.currentUser)
+    res.send(req.session.currentUser);
+  });
+
+  app.get("/api/users/logout", (req, res) => {
+    req.session.destroy();
+    res.send("Logged out");
+  });
+
   app.get("/api/reviews/:userId", async (req, res) => {
     const userId = req.params.userId
     const reviews = await dao.getReviewsByUserId(userId);
@@ -19,7 +34,7 @@ export default function UserRoutes(app) {
     // res.send(db.users);
 
     const userId = req.params.userId
-    console.log(userId)
+    console.log("XYZ", userId)
     const user = await dao.findUserById(userId);
     res.send(user);
   });
@@ -27,9 +42,9 @@ export default function UserRoutes(app) {
   app.put("/api/users/:userId", async (req, res) => {
     const { userId } = req.params;
     const updateUser = req.body;
-    console.log(updateUser)
+    console.log("XYZ", updateUser)
     const op = await dao.updateUser(userId, updateUser);
-    console.log(op)
+    console.log("XYZ", op)
     res.sendStatus(204);
   });
 
@@ -53,18 +68,9 @@ export default function UserRoutes(app) {
     res.send(newUser);
   });
 
-  app.get("/api/users/profile", async (req, res) => {
-    if (!req.session.currentUser) {
-      res.status(401).send("Not logged in");
-      return;
-    }
-    res.send(req.session.currentUser);
-  });
 
-  app.get("/api/users/logout", (req, res) => {
-    req.session.destroy();
-    res.send("Logged out");
-  });
+
+
 
   app.post("/api/users/login", async (req, res) => {
     const { username, password } = req.body;
