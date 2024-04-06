@@ -9,12 +9,10 @@ export default function UserRoutes(app) {
   });
 
   app.get("/api/users/profile", async (req, res) => {
-    console.log("123")
     if (!req.session.currentUser) {
       res.status(401).send("Not logged in");
       return;
     }
-    console.log("123", req.session.currentUser)
     res.send(req.session.currentUser);
   });
 

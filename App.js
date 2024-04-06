@@ -54,8 +54,8 @@ app.use(
         // cookie: {secure: true} // use when deployed remotely
     })
 )
+ReviewRoutes(app);
 AuthRoutes(app);
 UserRoutes(app);
-ReviewRoutes(app);
 Hello(app);
 app.listen(process.env.PORT || 4000);
