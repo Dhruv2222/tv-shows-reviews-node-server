@@ -22,7 +22,7 @@ export const getAverageRatingForShowId = async (showId) => {
       const totalRating = reviews.reduce((acc, review) => acc + review.rating, 0);
   
       // Calculate the average rating
-      const averageRating = totalRating / reviews.length;
+      const averageRating = (totalRating / reviews.length).toFixed(2);
   
       return averageRating;
     } catch (error) {
