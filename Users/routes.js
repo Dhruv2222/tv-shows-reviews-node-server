@@ -44,6 +44,20 @@ export default function UserRoutes(app) {
     res.sendStatus(204);
   });
 
+  app.delete("/api/users/:userId", async (req, res) => {
+    const userId = req.params.userId
+    try {
+      const result = await dao.deleteUser(userId);
+      if (!result || result.deletedCount === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.json({ message: `User with ID ${userId} deleted successfully.` });
+    } catch (error) {
+      console.error(`Failed to delete userId with ID ${userId}:`, error);
+      res.status(500).json({ message: "An error occurred while trying to delete the user." });
+    }
+  });
+
   app.post("/api/users/register", async (req, res) => {
     const { username, password } = req.body;
     const existUser = await dao.findUserByCredentials(username, password);
