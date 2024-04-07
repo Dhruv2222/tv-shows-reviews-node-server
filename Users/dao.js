@@ -11,20 +11,19 @@ export const findUserByEmail = (email) => userModel.findOne({ email: email, });
 export const getReviewsByUserId = (userId) => userModel.aggregate([
     {
         $match: {
-            _id: userId
+            username: userId
         }
     },
     {
         $lookup: {
             from: "reviews-table",
-            localField: "_id",
-            foreignField: "user_id",
+            localField: "username",
+            foreignField: "username",
             as: "reviews"
         }
     },
     {
         $project: {
-            _id: 0,
             reviews: 1
         }
     },
