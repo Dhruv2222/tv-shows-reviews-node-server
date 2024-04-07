@@ -21,7 +21,7 @@ export default function UserRoutes(app) {
     res.send("Logged out");
   });
 
-  app.get("/api/reviews/:userId", async (req, res) => {
+  app.get("/api/users/reviews/:userId", async (req, res) => {
     const userId = req.params.userId
     const reviews = await dao.getReviewsByUserId(userId);
     res.json(reviews);
@@ -29,8 +29,6 @@ export default function UserRoutes(app) {
 
 
   app.get("/api/users/:userId", async (req, res) => {
-    // res.send(db.users);
-
     const userId = req.params.userId
     console.log("XYZ", userId)
     const user = await dao.findUserById(userId);
