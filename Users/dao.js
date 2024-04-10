@@ -1,4 +1,6 @@
 import userModel from "./model.js";
+import mongoose from "mongoose";
+
 export const findAllUsers = () => userModel.find();
 export const findUserById = (id) => userModel.findById(id);
 export const createUser = (user) => userModel.create(user);

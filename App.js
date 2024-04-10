@@ -5,12 +5,15 @@ import session from "express-session";
 import AuthRoutes from "./Auth/routes.js";
 import UserRoutes from "./Users/routes.js";
 import ReviewRoutes from "./Profile/routes.js";
-import SearchRoutes from "./Search/routes.js";
+import WishlistRoutes from "./WishList/routes.js";
 import mongoose from "mongoose";
+import SearchRoutes from "./Search/routes.js";
 
-mongoose.connect(
-  "mongodb+srv://Cluster89442:aXF2Zm56TlRE@cluster89442.0fq4prg.mongodb.net/sample-d"
-);
+
+
+
+
+mongoose.connect("mongodb+srv://Cluster89442:aXF2Zm56TlRE@cluster89442.0fq4prg.mongodb.net/sample-d");
 mongoose.connection.on("connected", () => {
   console.log("Connected to MongoDB");
 });
@@ -54,12 +57,12 @@ app.use(
 );
 app.use(express.json());
 app.use(
-
   session({
     secret: "pizza is best",
     // cookie: {secure: true} // use when deployed remotely
   })
 );
+WishlistRoutes(app);
 ReviewRoutes(app);
 AuthRoutes(app);
 SearchRoutes(app);
