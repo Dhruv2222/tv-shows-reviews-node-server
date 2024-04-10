@@ -5,7 +5,9 @@ import session from 'express-session'
 import AuthRoutes from "./Auth/routes.js";
 import UserRoutes from "./Users/routes.js";
 import ReviewRoutes from "./Profile/routes.js";
+import WishlistRoutes from "./WishList/routes.js";
 import mongoose from "mongoose";
+
 
 mongoose.connect("mongodb+srv://Cluster89442:aXF2Zm56TlRE@cluster89442.0fq4prg.mongodb.net/sample-d");
 mongoose.connection.on('connected', () => {
@@ -54,6 +56,7 @@ app.use(
         // cookie: {secure: true} // use when deployed remotely
     })
 )
+WishlistRoutes(app);
 ReviewRoutes(app);
 AuthRoutes(app);
 UserRoutes(app);

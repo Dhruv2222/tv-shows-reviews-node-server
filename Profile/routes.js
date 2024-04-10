@@ -4,9 +4,9 @@ export default function ReviewRoutes(app) {
 
     app.post("/api/reviews", async (req, res) => {
         try {
-            console.log('1reqbody-', req.body);
+            // console.log('1reqbody-', req.body);
           const reviewData = req.body;
-          console.log('2reqbody-', reviewData);
+          // console.log('2reqbody-', reviewData);
           const newReview = await dao.addReview(reviewData);
           res.json(newReview);
         } catch (error) {
@@ -15,6 +15,7 @@ export default function ReviewRoutes(app) {
           res.status(500).json({ error: 'Internal server error' });
         }
       });
+      
 
     app.get("/api/reviews/:showId", async (req, res) => {    
         const showId = req.params.showId;
