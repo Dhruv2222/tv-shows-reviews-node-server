@@ -54,15 +54,15 @@ app.use(
 );
 app.use(express.json());
 app.use(
+
   session({
     secret: "pizza is best",
     // cookie: {secure: true} // use when deployed remotely
   })
 );
-
+ReviewRoutes(app);
 AuthRoutes(app);
 SearchRoutes(app);
 UserRoutes(app);
-ReviewRoutes(app);
 Hello(app);
 app.listen(process.env.PORT || 4000);
