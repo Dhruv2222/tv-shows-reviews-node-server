@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 export default mongoose.Schema(
     {
         _id: String,
-        user_id: String,
-        review_tvshow: String,
-        review_heading: String,
+        username: String,
+        showId: Number,
+        review_title: String,
         review_description: String,
-        review_date: String,
-        review_time: String
+        review_timestamp: { type: Date} ,
+        rating: Number
+
+        
     },
     { collection: "reviews-table" });

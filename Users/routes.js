@@ -9,12 +9,10 @@ export default function UserRoutes(app) {
   });
 
   app.get("/api/users/profile", async (req, res) => {
-    console.log("123")
     if (!req.session.currentUser) {
       res.status(401).send("Not logged in");
       return;
     }
-    console.log("123", req.session.currentUser)
     res.send(req.session.currentUser);
   });
 
@@ -23,7 +21,7 @@ export default function UserRoutes(app) {
     res.send("Logged out");
   });
 
-  app.get("/api/reviews/:userId", async (req, res) => {
+  app.get("/api/users/reviews/:userId", async (req, res) => {
     const userId = req.params.userId
     const reviews = await dao.getReviewsByUserId(userId);
     res.json(reviews);
@@ -31,8 +29,6 @@ export default function UserRoutes(app) {
 
 
   app.get("/api/users/:userId", async (req, res) => {
-    // res.send(db.users);
-
     const userId = req.params.userId
     console.log("XYZ", userId)
     const user = await dao.findUserById(userId);
@@ -46,6 +42,20 @@ export default function UserRoutes(app) {
     const op = await dao.updateUser(userId, updateUser);
     console.log("XYZ", op)
     res.sendStatus(204);
+  });
+
+  app.delete("/api/users/:userId", async (req, res) => {
+    const userId = req.params.userId
+    try {
+      const result = await dao.deleteUser(userId);
+      if (!result || result.deletedCount === 0) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      res.json({ message: `User with ID ${userId} deleted successfully.` });
+    } catch (error) {
+      console.error(`Failed to delete userId with ID ${userId}:`, error);
+      res.status(500).json({ message: "An error occurred while trying to delete the user." });
+    }
   });
 
   app.post("/api/users/register", async (req, res) => {
