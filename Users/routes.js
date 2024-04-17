@@ -111,12 +111,7 @@ export default function UserRoutes(app) {
 
     const newUser =
       dao.createUser({ username, password });
-    // {
-    //   ...req.body,
-    //   _id: new Date().getTime().toString(),
-    // };
-    // db.users.push(newUser);
-    req.session["currentUser"] = newUser;
+    req.session.currentUser = newUser;
     res.send(newUser);
   });
 
