@@ -8,6 +8,7 @@ import ReviewRoutes from "./Profile/routes.js";
 import WishlistRoutes from "./WishList/routes.js";
 import mongoose from "mongoose";
 import SearchRoutes from "./Search/routes.js";
+import ShowRoutes from "./Show/routes.js";
 
 
 
@@ -62,6 +63,7 @@ app.use(
     // cookie: {secure: true} // use when deployed remotely
   })
 );
+ShowRoutes(app);
 WishlistRoutes(app);
 ReviewRoutes(app);
 AuthRoutes(app);
