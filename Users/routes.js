@@ -10,11 +10,11 @@ export default function UserRoutes(app) {
   });
 
   app.get("/api/users/profile", async (req, res) => {
-    if (!req.session.currentUser) {
+    if (!req.session["currentUser"]) {
       res.status(401).send("Not logged in");
       return;
     }
-    res.send(req.session.currentUser);
+    res.send(req.session["currentUser"]);
   });
 
   app.get("/api/users/logout", (req, res) => {
@@ -111,7 +111,8 @@ export default function UserRoutes(app) {
 
     const newUser =
       dao.createUser({ username, password });
-    req.session.currentUser = newUser;
+    // req.session.currentUser = newUser;
+    req.session["currentUser"] = newUser;
     res.send(newUser);
   });
 
@@ -125,8 +126,10 @@ export default function UserRoutes(app) {
     // const user = db.users.find(
     //     (u) => u.username === req.body.username && u.password === req.body.password
     // ); 
+    console.log("HJEEREE", user)
     if (user) {
-      req.session.currentUser = user;
+      // req.session.currentUser = user;
+      req.session["currentUser"] = user;
       res.send(user);
     } else {
       res.status(401).send("Invalid Credentials");
