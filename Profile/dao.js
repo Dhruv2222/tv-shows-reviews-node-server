@@ -6,7 +6,7 @@ export const updateReview = (reivewId, review) => reviewModel.updateOne({ _id: r
 export const getReviewsByShowId = (showId) => reviewModel.find({ showId: showId }).sort({ review_timestamp: -1 });
 export const deleteReviewsByUsername = (username) => reviewModel.deleteMany({ username: username });
 export const addReview = (reviewData) => {
-  reviewData._id = new mongoose.Types.ObjectId();
+  // reviewData._id = new mongoose.Types.ObjectId();
   const newReview = new reviewModel(reviewData);
   console.log(reviewData);
   return newReview.save();
