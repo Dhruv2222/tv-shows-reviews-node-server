@@ -15,22 +15,6 @@ import "dotenv/config";
 const app = express();
 app.use(express.json());
 
-// const sessionOptions = {
-//   secret: process.env.SESSION_SECRET,
-//   resave: false,
-//   saveUninitialized: false,
-//   proxy: true,
-//   cookie: {
-//     sameSite: "none",
-//     secure: true,
-//     domain: "kanbas-node-server-app-1-mds9.onrender.com",
-//   },
-// };
-
-// app.use(
-//   session(sessionOptions)
-// );
-
 const sessionOptions = {
   secret: process.env.SESSION_SECRET,
   resave: false,
@@ -49,12 +33,6 @@ if (process.env.NODE_ENV !== "development") {
 }
 app.use(session(sessionOptions));
 
-// app.use(
-//   cors({
-//     origin: "http://localhost:3000", // Allow requests from this origin
-//     credentials: true, // Allow cookies and HTTP authentication to be sent
-//   })
-// );
 app.use(
   cors({
     credentials: true,
@@ -62,12 +40,6 @@ app.use(
   })
 );
 
-// app.use(
-//   session({
-//     secret: "pizza is best",
-//     // cookie: {secure: true} // use when deployed remotely
-//   })
-// );
 ShowRoutes(app);
 WishlistRoutes(app);
 ReviewRoutes(app);
