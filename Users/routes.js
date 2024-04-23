@@ -152,15 +152,18 @@ export default function UserRoutes(app) {
   });
 
   app.post("/api/users/register", async (req, res) => {
-    const { username, password } = req.body;
-    const existUser = await dao.findUserByCredentials(username, password);
+    const { username, password, role, email, phone_number, favorite_TVshow } = req.body;
+    console.log(username, password, role, email, phone_number, favorite_TVshow)
+    const existUser = await dao.findUserByUsername(username);
     if (existUser) {
       res.status(400).send("Username Already exists");
-      return;
+      console.log("ggg")
+      return
     }
     // res.json(currentUser);
 
-    const newUser = dao.createUser({ username, password });
+    const newUser =
+      dao.createUser({ username, password, role, email, phone_number, favorite_TVshow });
     // req.session.currentUser = newUser;
     req.session["currentUser"] = newUser;
     res.send(newUser);
